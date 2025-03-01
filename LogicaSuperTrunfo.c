@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // Desafio Super Trunfo - Países
-// Tema 1 - Cadastro das Cartas
+// Tema 2 - Comparação de Cartas
 // Teste Kauã de Sousa Ferreira
 
 int main() {
@@ -106,6 +106,20 @@ int main() {
     printf("Número de Pontos Turísticos: %d\n", quantidade_pontos_turisticos2);
     printf("Densidade Populacional: %.2f\n", densidade_populacao2);
     printf("PIB per Capta: %.5f\n", PIB_perCapta2);
+
+    printf("\n");
+
+    if (PIB_perCapta1 > PIB_perCapta2) {
+        printf("Duelo entre cartas! (Atributo: PIB per Capta)\n");
+        printf("Carta 1: %.5f\n", PIB_perCapta1);
+        printf("Carta 2: %.5f\n", PIB_perCapta2);
+        printf("A Carta 1 venceu com maior pontuação!\n"); }
+    else {
+        printf("Duelo entre cartas! (Atributo: PIB per Capta)\n");
+        printf("Carta 1: %.5f\n", PIB_perCapta1);
+        printf("Carta 2: %.5f\n", PIB_perCapta2);
+        printf("A Carta 2 venceu com maior pontuação!\n"); }
+
 
     return 0;
 }
