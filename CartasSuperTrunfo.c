@@ -41,13 +41,11 @@ int main() {
 
     // Cálculo da Densidade Populacional e PIB per capta da Carta 1:
     densidade_populacao1 = quantidade_populacao1 / area_cidade1;
-
     PIB_perCapta1 = PIB1 / quantidade_populacao1;
 
 
     // Criação da segunda carta:
     printf("Sua primeira carta está pronta! Vamos agora criar a segunda carta! \n");
-
 
     printf("Escolha uma letra de A a H para seu estado: \n");
      scanf(" %c", &estado2);
@@ -73,7 +71,6 @@ int main() {
 
     // Cálculo da Densidade Populacional e PIB per capta da Carta 2:
     densidade_populacao2 = quantidade_populacao2 / area_cidade2;
-
     PIB_perCapta2 = PIB2 / quantidade_populacao2;
 
 
@@ -93,7 +90,6 @@ int main() {
     printf("Densidade Populacional: %.2f\n", densidade_populacao1);
     printf("PIB per Capta: %.5f\n", PIB_perCapta1);
 
-    //Linha em branco para separar as cartas
     printf("\n");
 
     printf("Carta 2:\n");

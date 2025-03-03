@@ -9,16 +9,15 @@ int main() {
     // Declaração de variáveis:
     char estado1, estado2;
     char codigo_carta1[10], cidade1[20], codigo_carta2[10], cidade2[20];
-    int quantidade_populacao1, quantidade_pontos_turisticos1, quantidade_populacao2, quantidade_pontos_turisticos2;
+    int quantidade_populacao1, quantidade_pontos_turisticos1, quantidade_populacao2, quantidade_pontos_turisticos2, opcao, atributo;
     float area_cidade1, PIB1, area_cidade2, PIB2, densidade_populacao1, densidade_populacao2, PIB_perCapta1, PIB_perCapta2;
 
     // Criação da primeira carta:
     printf("Olá! Vamos iniciar a criação da sua primeira carta no Super Trunfo! \n");
 
-
     // Entrada de dados com 'printf' e saída de dados com 'scanf':
     printf("Escolha uma letra de A a H para seu estado: \n");
-     scanf("%c", &estado1);
+     scanf(" %c", &estado1);
 
     printf("Escolha um número de 01 a 04 para o código de sua carta: \n");
      scanf("%s", codigo_carta1);
@@ -38,16 +37,12 @@ int main() {
     printf("Escolha a quantidade de pontos turísticos de sua cidade: \n");
      scanf("%d", &quantidade_pontos_turisticos1);
 
-
     // Cálculo da Densidade Populacional e PIB per capta da Carta 1:
     densidade_populacao1 = quantidade_populacao1 / area_cidade1;
-
     PIB_perCapta1 = PIB1 / quantidade_populacao1;
-
 
     // Criação da segunda carta:
     printf("Sua primeira carta está pronta! Vamos agora criar a segunda carta! \n");
-
 
     printf("Escolha uma letra de A a H para seu estado: \n");
      scanf(" %c", &estado2);
@@ -70,16 +65,12 @@ int main() {
     printf("Escolha a quantidade de pontos turísticos de sua cidade: \n");
      scanf("%d", &quantidade_pontos_turisticos2);
 
-
     // Cálculo da Densidade Populacional e PIB per capta da Carta 2:
     densidade_populacao2 = quantidade_populacao2 / area_cidade2;
-
     PIB_perCapta2 = PIB2 / quantidade_populacao2;
-
 
     // Exibição das duas cartas:
     printf("Veja as duas cartas que você criou: \n");
-
     printf("\n");
 
     printf("Carta 1:\n");
@@ -93,7 +84,6 @@ int main() {
     printf("Densidade Populacional: %.2f\n", densidade_populacao1);
     printf("PIB per Capta: %.5f\n", PIB_perCapta1);
 
-    //Linha em branco para separar as cartas
     printf("\n");
 
     printf("Carta 2:\n");
@@ -109,17 +99,74 @@ int main() {
 
     printf("\n");
 
-    if (PIB_perCapta1 > PIB_perCapta2) {
-        printf("Duelo entre cartas! (Atributo: PIB per Capta)\n");
-        printf("Carta 1: %.5f\n", PIB_perCapta1);
-        printf("Carta 2: %.5f\n", PIB_perCapta2);
-        printf("A Carta 1 venceu com maior pontuação!\n"); }
-    else {
-        printf("Duelo entre cartas! (Atributo: PIB per Capta)\n");
-        printf("Carta 1: %.5f\n", PIB_perCapta1);
-        printf("Carta 2: %.5f\n", PIB_perCapta2);
-        printf("A Carta 2 venceu com maior pontuação!\n"); }
+    // Início do jogo:
+    printf("$$$ Jogo do SUPER TRUNFO $$$\n");
 
+    printf("Selecione 1 para jogar ou 2 para sair.\n");
+    printf("1 - Jogar\n");
+    printf("2 - Sair\n");
+    scanf("%d", &opcao);
+
+    if (opcao == 1) {
+     printf("Escolha um atributo para comparar entre os países e ver qual será o ganhador!\n");
+     printf("%c%s x %c%s\n", estado1, codigo_carta1, estado2, codigo_carta2); 
+     printf("1. População\n");
+     printf("2. Área\n");
+     printf("3. PIB\n");
+     printf("4. Pontos Turísticos\n");
+     printf("5. Densidade demográfica\n");
+
+     scanf("%d", &atributo); 
+     switch (atributo) {
+
+        case 1:
+         printf("%d x %d\n", quantidade_populacao1, quantidade_populacao2);
+          if (quantidade_populacao1 > quantidade_populacao2) {
+           printf("O país %c%s venceu com maior pontuação no atributo População!", estado1, codigo_carta1); }
+          else {
+           printf("O país %c%s venceu com maior pontuação no atributo População!", estado2, codigo_carta2);}
+        break;
+
+        case 2:
+         printf("%f x %f\n", area_cidade1, area_cidade2);
+          if (area_cidade1 > area_cidade2) {
+           printf("O país %c%s venceu com maior pontuação no atributo Área!", estado1, codigo_carta1); }
+          else {
+           printf("O país %c%s venceu com maior pontuação no atributo Área!", estado2, codigo_carta2); }
+        break;
+        
+        case 3:
+         printf("%f x %f\n", PIB1, PIB2);
+          if (PIB1 > PIB2) {
+           printf("O país %c%s venceu com maior pontuação no atributo PIB!", estado1, codigo_carta1); }
+          else {
+           printf("O país %c%s venceu com maior pontuação no atributo PIB!", estado2, codigo_carta2); }
+        break;
+
+        case 4:
+         printf("%d x %d\n", quantidade_pontos_turisticos1, quantidade_pontos_turisticos2);
+          if (quantidade_pontos_turisticos1 > quantidade_pontos_turisticos2) {
+           printf("O país %c%s venceu com maior pontuação em Pontos turísticos!", estado1, codigo_carta1); }
+          else {
+           printf("O país %c%s venceu com maior pontuação em Pontos turísticos!", estado2, codigo_carta2);}
+        break;
+
+        case 5:
+         printf("%f x %f\n", densidade_populacao1, densidade_populacao2);
+          if (densidade_populacao1 < densidade_populacao2) {
+           printf("O país %c%s venceu com menor densidade demográfica!", estado1, codigo_carta1); }
+          else {
+           printf("O país %c%s venceu com menor densidade demográfica!", estado2, codigo_carta2);}
+        break;
+
+        default:
+         printf("Opção de atributo inválida. Tente novamente");
+     }
+    } else if (opcao == 2) {
+     printf("Você escolheu sair do jogo. Até a próxima!");
+    } else {
+     printf("Opção inválida. Tente novamente");
+    }
 
     return 0;
 }
