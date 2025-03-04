@@ -18,10 +18,9 @@ int main() {
     // Criação da primeira carta:
     printf("Olá! Vamos iniciar a criação da sua primeira carta no Super Trunfo! \n");
 
-
     // Entrada de dados com 'printf' e saída de dados com 'scanf':
     printf("Escolha uma letra de A a H para seu estado: \n");
-     scanf("%c", &estado1);
+     scanf(" %c", &estado1);
 
     printf("Escolha um número de 01 a 04 para o código de sua carta: \n");
      scanf("%s", codigo_carta1);
@@ -108,12 +107,12 @@ int main() {
 
 
    // Cálculo do Super Poder:
-   super_poder1 = (float)quantidade_populacao1 + area_cidade1 + PIB1 + quantidade_pontos_turisticos1 +  PIB_perCapta1 - densidade_populacao1;
-   super_poder2 = (float)quantidade_populacao2 + area_cidade2 + PIB2 + quantidade_pontos_turisticos2 +  PIB_perCapta2 - densidade_populacao2;
+   super_poder1 = (float) quantidade_populacao1 + area_cidade1 + PIB1 + quantidade_pontos_turisticos1 +  PIB_perCapta1 - densidade_populacao1;
+   super_poder2 = (float) quantidade_populacao2 + area_cidade2 + PIB2 + quantidade_pontos_turisticos2 +  PIB_perCapta2 - densidade_populacao2;
     
 
    // Comparação e exibição dos poderes de cada carta:
-   printf("### Compare os poderes de suas cartas! ###\n");
+   printf("### Compare os poderes de suas cartas ###\n");
    printf("\n");
 
     if (quantidade_populacao1 > quantidade_populacao2) {
