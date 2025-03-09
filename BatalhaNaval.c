@@ -2,8 +2,8 @@
 
  // Tema 4 - Batalha Naval
  // Aluno Kauã de Sousa Ferreira
- // Nível Novato
- 
+ // Nível Aventureiro
+
 void inicializar_tabuleiro(int tabuleiro[10][10]) {
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
@@ -17,7 +17,12 @@ void posicionar_navio(int tabuleiro[10][10], int linha, int coluna, int orientac
         for (int i = 0; i < 3; i++) {
             tabuleiro[linha][coluna + i] = 3; // Posiciona navio horizontalmente
         }
-    } else { // 1 para vertical
+    } else if (orientacao == 1) { // 1 para diagonal
+        for (int i = 0; i < 3; i++) {
+            tabuleiro[linha + i][coluna + i] = 3; //Posiciona navio diagonalmente
+        }
+      
+    } else { // 2 para vertical
         for (int i = 0; i < 3; i++) {
             tabuleiro[linha + i][coluna] = 3; // Posiciona navio verticalmente
         }
@@ -51,10 +56,14 @@ int main() {
     // Coordenadas iniciais dos navios
     int linha_navio1 = 2, coluna_navio1 = 3; // Navio horizontal
     int linha_navio2 = 5, coluna_navio2 = 7; // Navio vertical
+    int linha_navio3 = 4, coluna_navio3 = 1; // Navio diagonal 1
+    int linha_navio4 = 0, coluna_navio4 = 7; // Navio diagonal 2
 
     // Posiciona os navios no tabuleiro
     posicionar_navio(tabuleiro, linha_navio1, coluna_navio1, 0); // Navio horizontal
-    posicionar_navio(tabuleiro, linha_navio2, coluna_navio2, 1); // Navio vertical
+    posicionar_navio(tabuleiro, linha_navio2, coluna_navio2, 2); // Navio vertical
+    posicionar_navio(tabuleiro, linha_navio3, coluna_navio3, 1); // Navio diagonal
+    posicionar_navio(tabuleiro, linha_navio4, coluna_navio4, 1); // Navio diagonal
 
     // Exibe o tabuleiro
     exibir_tabuleiro(tabuleiro);
