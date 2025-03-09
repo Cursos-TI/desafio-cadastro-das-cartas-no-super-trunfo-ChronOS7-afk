@@ -1,47 +1,128 @@
 #include <stdio.h>
+#include <stdlib.h>
 
  // Tema 4 - Batalha Naval
  // Aluno Kauã de Sousa Ferreira
- // Nível Aventureiro
+ // Nível Mestre
 
+// Constantes para os tipos de células no tabuleiro
+#define AGUA 0
+#define NAVIO 3
+#define HABILIDADE_AREA 5
+
+// Inicializa o tabuleiro com água (0)
 void inicializar_tabuleiro(int tabuleiro[10][10]) {
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
-            tabuleiro[i][j] = 0; // Inicializa todas as posições com 0 (água)
+            tabuleiro[i][j] = AGUA;
         }
     }
 }
 
+// Cria a matriz da habilidade em forma de cone
+void criar_cone(int habilidade[5][5]) {
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            // Define o padrão do cone: 1 na primeira linha, 3 na segunda, 5 na terceira
+            if (i == 0 && j == 2) {
+                habilidade[i][j] = 1; // Topo do cone
+            } else if (i == 1 && j >= 1 && j <= 3) {
+                habilidade[i][j] = 1; // Expansão para 3
+            } else if (i == 2 && j >= 0 && j <= 4) {
+                habilidade[i][j] = 1; // Expansão para 5
+            } else {
+                habilidade[i][j] = 0; // Fora do cone
+            }
+        }
+    }
+}
+
+// Cria a matriz da habilidade em forma de Cruz
+void criar_cruz(int habilidade[5][5]) {
+    int centro = 2; // Centro da matriz 5x5
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            habilidade[i][j] = (i == centro || j == centro) ? 1 : 0;
+        }
+    }
+}
+
+// Cria a matriz da habilidade em forma de octaedro
+void criar_octaedro(int habilidade[5][5]) {
+    // Inicializa toda a matriz com 0
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            habilidade[i][j] = 0;
+        }
+    }
+
+    // Define o padrão do octaedro
+    habilidade[1][2] = 5; // Centro
+    habilidade[2][1] = 5; // Esquerda
+    habilidade[2][2] = 5; // Centro
+    habilidade[2][3] = 5; // Direita
+    habilidade[3][2] = 5; // Inferior
+}
+
+// Posiciona um navio de tamanho 3 no tabuleiro
 void posicionar_navio(int tabuleiro[10][10], int linha, int coluna, int orientacao) {
-    if (orientacao == 0) { // 0 para horizontal
+    if (orientacao == 0) { // Horizontal
         for (int i = 0; i < 3; i++) {
-            tabuleiro[linha][coluna + i] = 3; // Posiciona navio horizontalmente
+            if (coluna + i < 10) {
+                tabuleiro[linha][coluna + i] = NAVIO;
+            }
         }
-    } else if (orientacao == 1) { // 1 para diagonal
+    } else if (orientacao == 1) { // Vertical
         for (int i = 0; i < 3; i++) {
-            tabuleiro[linha + i][coluna + i] = 3; //Posiciona navio diagonalmente
+            if (linha + i < 10) {
+                tabuleiro[linha + i][coluna] = NAVIO;
+            }
         }
-      
-    } else { // 2 para vertical
+    } else { // Diagonal
         for (int i = 0; i < 3; i++) {
-            tabuleiro[linha + i][coluna] = 3; // Posiciona navio verticalmente
+            if (linha + i < 10) {
+                tabuleiro[linha + i][coluna + i] = NAVIO;
+            }
+        }
+    }
+
+}
+
+// Sobrepõe a matriz de habilidade no tabuleiro, centrada nas coordenadas informadas
+void aplicar_habilidade(int tabuleiro[10][10], int habilidade[5][5], int origem_linha, int origem_coluna) {
+    int deslocamento = 2; // Deslocamento para centralizar a matriz 5x5
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            int linha_tabuleiro = origem_linha + (i - deslocamento);
+            int coluna_tabuleiro = origem_coluna + (j - deslocamento);
+
+            // Verifica se a posição está dentro dos limites do tabuleiro
+            if (linha_tabuleiro >= 0 && linha_tabuleiro < 10 &&
+                coluna_tabuleiro >= 0 && coluna_tabuleiro < 10) {
+
+                // Se a posição na matriz de habilidade for diferente de 0, aplica no tabuleiro
+                if (habilidade[i][j] != 0) {
+                    tabuleiro[linha_tabuleiro][coluna_tabuleiro] = HABILIDADE_AREA;
+                }
+            }
         }
     }
 }
 
+// Exibe o tabuleiro com valores numéricos
 void exibir_tabuleiro(int tabuleiro[10][10]) {
-    // Imprime a linha das letras (A até J)
-    printf("  ");
+    // Exibe letras das colunas (A-J)
+    printf("   ");
     for (char letra = 'A'; letra < 'A' + 10; letra++) {
         printf("%c ", letra);
     }
     printf("\n");
 
+    // Exibe cada linha do tabuleiro
     for (int i = 0; i < 10; i++) {
-        // Imprime o número da linha (1 até 10)
-        printf("%2d ", i + 1);
+        printf("%2d ", i + 1); // Número da linha (1-10)
         for (int j = 0; j < 10; j++) {
-            printf("%d ", tabuleiro[i][j]);
+            printf("%d ", tabuleiro[i][j]); // Exibe o valor numérico da célula
         }
         printf("\n");
     }
@@ -49,23 +130,30 @@ void exibir_tabuleiro(int tabuleiro[10][10]) {
 
 int main() {
     int tabuleiro[10][10];
+    int habilidade[5][5];
 
     // Inicializa o tabuleiro
     inicializar_tabuleiro(tabuleiro);
 
-    // Coordenadas iniciais dos navios
-    int linha_navio1 = 2, coluna_navio1 = 3; // Navio horizontal
-    int linha_navio2 = 5, coluna_navio2 = 7; // Navio vertical
-    int linha_navio3 = 4, coluna_navio3 = 1; // Navio diagonal 1
-    int linha_navio4 = 0, coluna_navio4 = 7; // Navio diagonal 2
+    // Posiciona navios no tabuleiro
+    posicionar_navio(tabuleiro, 2, 7, 0); // Navio horizontal 
+    posicionar_navio(tabuleiro, 6, 3, 1); // Navio vertical 
+    posicionar_navio(tabuleiro, 5, 0, 2); // Navio diagonal
+    posicionar_navio(tabuleiro, 3, 7, 2); // Navio diagonal
 
-    // Posiciona os navios no tabuleiro
-    posicionar_navio(tabuleiro, linha_navio1, coluna_navio1, 0); // Navio horizontal
-    posicionar_navio(tabuleiro, linha_navio2, coluna_navio2, 2); // Navio vertical
-    posicionar_navio(tabuleiro, linha_navio3, coluna_navio3, 1); // Navio diagonal
-    posicionar_navio(tabuleiro, linha_navio4, coluna_navio4, 1); // Navio diagonal
+    // Aplica habilidade Cone centrada na posição (4,4)
+    criar_cone(habilidade);
+    aplicar_habilidade(tabuleiro, habilidade, 4, 4);
 
-    // Exibe o tabuleiro
+    // Aplica habilidade Cruz centrada na posição (7,7)
+    criar_cruz(habilidade);
+    aplicar_habilidade(tabuleiro, habilidade, 7, 7);
+
+    // Aplica habilidade Octaedro centrada na posição (1,1)
+    criar_octaedro(habilidade);
+    aplicar_habilidade(tabuleiro, habilidade, 1, 1);
+
+    // Exibe o tabuleiro final
     exibir_tabuleiro(tabuleiro);
 
     return 0;
